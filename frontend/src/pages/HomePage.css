@@ -1,0 +1,206 @@
+.home-section {
+  padding: 80px 0;
+}
+
+.home-section--alt {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.home-section__header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.home-section__eyebrow {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+}
+
+/* Features */
+.home-features {}
+
+.home-feature {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  transition: var(--transition);
+}
+
+.home-feature:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: transparent;
+}
+
+.home-feature__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.home-feature__title {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 10px;
+}
+
+.home-feature__desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Steps */
+.home-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.home-step {
+  text-align: center;
+  padding: 0 24px;
+  position: relative;
+}
+
+.home-step__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--color-primary), #6366F1);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  box-shadow: 0 4px 16px rgba(79,70,229,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.home-step__connector {
+  position: absolute;
+  top: 26px;
+  left: calc(50% + 28px);
+  right: calc(-50% + 28px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary-bg));
+}
+
+.home-step__title {
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.home-step__desc {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* CTA Banner */
+.home-cta {
+  padding: 80px 0;
+}
+
+.home-cta__inner {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, #6366F1 100%);
+  border-radius: var(--radius-xl);
+  padding: 64px 48px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.home-cta__blobs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-cta__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+}
+
+.home-cta__blob--1 {
+  width: 400px;
+  height: 400px;
+  background: rgba(255,255,255,0.2);
+  top: -100px;
+  right: -80px;
+}
+
+.home-cta__blob--2 {
+  width: 300px;
+  height: 300px;
+  background: rgba(6,182,212,0.4);
+  bottom: -80px;
+  left: -60px;
+}
+
+.home-cta__content {
+  position: relative;
+  z-index: 1;
+}
+
+.home-cta__title {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.home-cta__desc {
+  font-size: 1.0625rem;
+  color: rgba(255,255,255,0.85);
+  max-width: 560px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+
+.home-cta__actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .home-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .home-step__connector { display: none !important; }
+  .home-cta__title { font-size: 1.75rem; }
+}
+
+@media (max-width: 600px) {
+  .home-section { padding: 52px 0; }
+  .home-steps { grid-template-columns: 1fr; }
+  .home-cta__inner { padding: 40px 24px; }
+}
