@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Cpu, Users, TrendingUp, ChevronDown } from "lucide-react";
+import { ArrowRight, Cpu, Users, TrendingUp } from "lucide-react";
 import { SEGMENTS } from "../data/segmentData";
 import "./HeroSection.css";
 
@@ -80,11 +80,6 @@ export default function HeroSection() {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="hero__scroll">
-        <ChevronDown size={20} />
       </div>
     </section>
   );

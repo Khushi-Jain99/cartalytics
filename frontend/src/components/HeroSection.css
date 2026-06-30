@@ -217,20 +217,9 @@
   border-radius: var(--radius-full);
 }
 
-/* Scroll Indicator */
-.hero__scroll {
-  position: absolute;
-  bottom: 90px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--color-text-muted);
-  animation: float 2s ease-in-out infinite;
-  z-index: 1;
-}
 
 @media (max-width: 768px) {
   .hero__content { padding-top: 48px; padding-bottom: 40px; }
   .hero__stats { gap: 16px; }
   .hero__stat { padding: 10px 14px; }
-  .hero__scroll { display: none; }
 }
