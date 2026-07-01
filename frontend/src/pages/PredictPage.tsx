@@ -21,7 +21,8 @@ export default function PredictPage() {
     const minDelay = new Promise((r) => setTimeout(r, 1200));
 
     try {
-      const response = await fetch("http://localhost:8000/api/predict", {
+      const apiUrl = import.meta.env.VITE_API_URL || "https://cartalytics.onrender.com";
+      const response = await fetch(`${apiUrl}/api/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
