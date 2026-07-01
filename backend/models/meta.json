@@ -1,0 +1,33 @@
+{
+  "reference_date": "2014-06-29",
+  "default_tenure_days": 355,
+  "feature_columns": [
+    "Income",
+    "Recency",
+    "NumDealsPurchases",
+    "NumWebPurchases",
+    "NumCatalogPurchases",
+    "NumStorePurchases",
+    "NumWebVisitsMonth",
+    "Complain",
+    "Response",
+    "Age",
+    "Customer_Tenure_Days",
+    "Total_Spending",
+    "Total_Children",
+    "Education_Graduate",
+    "Education_Postgraduate",
+    "Education_Undergraduate",
+    "Living_With_Alone",
+    "Living_With_Partner"
+  ],
+  "education_categories": [
+    "Graduate",
+    "Postgraduate",
+    "Undergraduate"
+  ],
+  "living_with_categories": [
+    "Alone",
+    "Partner"
+  ]
+}

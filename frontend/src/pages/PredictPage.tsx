@@ -3,25 +3,53 @@ import CustomerForm from "../components/CustomerForm";
 import SegmentCard from "../components/SegmentCard";
 import { mockPredict, getSegmentById } from "../utils/mockPredict";
 import type { CustomerInput, PredictionResult } from "../utils/mockPredict";
-import { RefreshCw, Sparkles } from "lucide-react";
+import { RefreshCw, Sparkles, Info } from "lucide-react";
 import "./PredictPage.css";
 
 export default function PredictPage() {
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [usingMock, setUsingMock] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (data: CustomerInput) => {
     setLoading(true);
     setResult(null);
-    // Simulate a small delay for UX
-    await new Promise((r) => setTimeout(r, 1200));
-    const prediction = mockPredict(data);
-    setResult(prediction);
-    setLoading(false);
-    // Scroll to result
-    setTimeout(() => {
-      document.getElementById("predict-result")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
+    setUsingMock(false);
+    setErrorMsg(null);
+
+    const minDelay = new Promise((r) => setTimeout(r, 1200));
+
+    try {
+      const response = await fetch("http://localhost:8000/api/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server returned status ${response.status}`);
+      }
+
+      const prediction = await response.json();
+      await minDelay;
+      setResult(prediction);
+    } catch (err: any) {
+      console.warn("Failed to connect to ML backend, falling back to mock predictor.", err);
+      const fallbackResult = mockPredict(data);
+      await minDelay;
+      setResult(fallbackResult);
+      setUsingMock(true);
+      setErrorMsg("Failed to connect to ML model server. Running heuristic backup locally.");
+    } finally {
+      setLoading(false);
+      // Scroll to result
+      setTimeout(() => {
+        document.getElementById("predict-result")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
   };
 
   const segment = result ? getSegmentById(result.segmentId) : null;
@@ -98,6 +126,12 @@ export default function PredictPage() {
                     <RefreshCw size={14} /> New Prediction
                   </button>
                 </div>
+                {usingMock && (
+                  <div className="predict-fallback-warning">
+                    <Info size={14} />
+                    <span>{errorMsg}</span>
+                  </div>
+                )}
                 <SegmentCard
                   segment={segment}
                   confidence={result.confidence}
