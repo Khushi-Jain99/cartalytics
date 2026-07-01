@@ -46,8 +46,6 @@ export default function CustomerForm({ onSubmit, loading }: Props) {
     onSubmit(form);
   };
 
-  const toggle = (s: Section) => setOpenSection(openSection === s ? s : s);
-
   const totalSpending =
     form.MntWines + form.MntFruits + form.MntMeatProducts +
     form.MntFishProducts + form.MntSweetProducts + form.MntGoldProds;
@@ -247,7 +245,7 @@ function AccordionSection({
   onToggle: () => void; badge?: string; children: React.ReactNode;
 }) {
   return (
-    <div className={`cform__section ${open ? "cform__section--open" : ""}`}>
+    <div id={id} className={`cform__section ${open ? "cform__section--open" : ""}`}>
       <button type="button" className="cform__section-header" onClick={onToggle}>
         <div className="cform__section-title">
           <span className="cform__section-emoji">{emoji}</span>

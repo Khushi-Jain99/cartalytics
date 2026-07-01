@@ -10,15 +10,17 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  ScatterController,
 } from "chart.js";
-import { Bar, Radar, Doughnut } from "react-chartjs-2";
+import { Bar, Radar, Doughnut, Scatter } from "react-chartjs-2";
 import { SEGMENTS } from "../data/segmentData";
 import "./Charts.css";
 
 ChartJS.register(
   CategoryScale, LinearScale, BarElement,
   RadialLinearScale, PointElement, LineElement,
-  Filler, Tooltip, Legend, ArcElement
+  Filler, Tooltip, Legend, ArcElement,
+  ScatterController
 );
 
 const COLORS = ["#4F46E5", "#06B6D4", "#10B981", "#F59E0B"];
@@ -168,7 +170,7 @@ export function IncomeSpendingChart() {
     labels: ["Income ($k)"],
     datasets: SEGMENTS.map((s, i) => ({
       label: `${s.emoji} ${s.label}`,
-      data: [{ x: s.avgIncome / 1000, y: s.avgSpending }],
+      data: [{ x: Math.round(s.avgIncome / 1000), y: s.avgSpending }],
       backgroundColor: COLORS[i],
       pointRadius: 16,
       pointHoverRadius: 20,
@@ -182,29 +184,36 @@ export function IncomeSpendingChart() {
         <p className="chart-card__desc">Cluster centroids plotted by average income and spending</p>
       </div>
       <div className="chart-card__body chart-card__body--sm">
-        <Bar
-          data={{
-            labels: SEGMENTS.map((s) => `${s.emoji} ${s.label}`),
-            datasets: [
-              {
-                label: "Avg Income ($k)",
-                data: SEGMENTS.map((s) => s.avgIncome / 1000),
-                backgroundColor: COLORS.map((c) => c + "CC"),
-                borderRadius: 8,
-                borderSkipped: false,
-              },
-            ],
-          }}
+        <Scatter
+          data={data}
           options={{
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-              legend: { display: false },
-              tooltip: { callbacks: { label: (ctx) => ` $${ctx.parsed.y}k income` } },
+              legend: { position: "bottom", labels: { usePointStyle: true, padding: 12, font: { size: 11 } } },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => {
+                    const raw = ctx.raw as { x: number; y: number };
+                    return ` ${ctx.dataset.label}: Income $${raw.x}k, Spend $${raw.y}`;
+                  },
+                },
+              },
             },
             scales: {
-              x: { grid: { display: false } },
-              y: { ticks: { callback: (v) => `$${v}k` }, grid: { color: "rgba(0,0,0,0.05)" } },
+              x: {
+                type: "linear",
+                position: "bottom",
+                title: { display: true, text: "Average Income ($k)", color: "#6B7280", font: { size: 10, weight: "bold" } },
+                ticks: { callback: (v) => `$${v}k`, font: { size: 10 }, color: "#9CA3AF" },
+                grid: { color: "rgba(0,0,0,0.05)" },
+              },
+              y: {
+                type: "linear",
+                title: { display: true, text: "Average Spending ($)", color: "#6B7280", font: { size: 10, weight: "bold" } },
+                ticks: { callback: (v) => `$${v}`, font: { size: 10 }, color: "#9CA3AF" },
+                grid: { color: "rgba(0,0,0,0.05)" },
+              },
             },
           }}
         />
